@@ -7,9 +7,6 @@ const makx int = 100
 
 type Pemain struct {
 	nama   string
-	kill   int
-	death  int
-	assist int
 }
 
 type Tim struct {
@@ -39,7 +36,7 @@ func main() {
 	var n, m, pilihan, peran, maksperan int
 	var pw string
 	var pwBenar bool = false
-	n = 2
+	n = 5
 	m = 2
 	maksperan = 5
 
@@ -48,23 +45,23 @@ func main() {
 		menang: 3,
 		kalah:  1,
 		player: [5]Pemain{
-			{"Wann", 10, 2, 8},
-			{"Rexxy", 7, 3, 9},
-			{"Antimage", 5, 5, 6},
-			{"Clover", 8, 4, 7},
-			{"Luminaire", 2, 1, 14},
+			{"Wann"},
+			{"Rexxy"},
+			{"Antimage"},
+			{"Clover"},
+			{"Luminaire"},
 		},
 	}
 	tim[1] = Tim{
-		nama:   "RRQ",
+		nama:   "NAVI",
 		menang: 2,
 		kalah:  2,
 		player: [5]Pemain{
-			{"Vyn", 6, 4, 10},
-			{"Albert", 12, 5, 4},
-			{"Lemon", 4, 2, 9},
-			{"Skylar", 7, 3, 8},
-			{"R7", 5, 5, 5},
+			{"Vyn"},
+			{"Albert"},
+			{"Lemon"},
+			{"Skylar"},
+			{"R7"},
 		},
 	}
 	tim[2] = Tim{
@@ -72,11 +69,11 @@ func main() {
 		menang: 4,
 		kalah:  0,
 		player: [5]Pemain{
-			{"Butsss", 11, 3, 10},
-			{"CW", 9, 2, 12},
-			{"Sanz", 8, 4, 11},
-			{"Kiboy", 6, 5, 14},
-			{"Drian", 7, 3, 9},
+			{"Butsss"},
+			{"CW"},
+			{"Sanz"},
+			{"Kiboy"},
+			{"Drian"},
 		},
 	}
 	tim[3] = Tim{
@@ -84,11 +81,11 @@ func main() {
 		menang: 1,
 		kalah:  3,
 		player: [5]Pemain{
-			{"High", 6, 7, 5},
-			{"Fluffy", 5, 6, 8},
-			{"Godiva", 4, 4, 9},
-			{"Facehugger", 3, 5, 7},
-			{"Kabuki", 5, 6, 6},
+			{"High"},
+			{"Fluffy"},
+			{"Godiva"},
+			{"Facehugger"},
+			{"Kabuki"},
 		},
 	}
 	tim[4] = Tim{
@@ -96,20 +93,21 @@ func main() {
 		menang: 0,
 		kalah:  4,
 		player: [5]Pemain{
-			{"Baloyskie", 3, 8, 5},
-			{"Janaaqt", 4, 7, 6},
-			{"Luke", 2, 6, 4},
-			{"Caderaa", 5, 6, 5},
-			{"Aboy", 3, 5, 7},
+			{"Baloyskie"},
+			{"Janaaqt"},
+			{"Luke"},
+			{"Caderaa"},
+			{"Aboy"},
 		},
-	}
+	}	
+			
 
-	match[0] = pertandingan{"EVOS", "RRQ", 2, 1, "2025-05-01", "Albert"}
-	match[1] = pertandingan{"RRQ", "EVOS", 0, 2, "2025-05-10", "Wann"}
+	match[0] = pertandingan{"EVOS", "NAVI", 2, 1, "2025-05-01", "Wanna"}
+	match[1] = pertandingan{"NAVI", "EVOS", 0, 2, "2025-05-10", "Wann"}
 
 	fmt.Println("Peran : ")
-	fmt.Println("1. Panitia")
-	fmt.Println("2. Pengguna")
+	fmt.Println("1. Admin")
+	fmt.Println("2. User")
 	fmt.Print("Pilih peran : ")
 	fmt.Scan(&peran)
 
@@ -127,12 +125,13 @@ func main() {
 			}
 		}
 		if !pwBenar {
-			fmt.Println("Percobaan habis. Akses ditolak.")
-			pilihan = 9
+		fmt.Println("Percobaan habis. Akses ditolak.")
+		pilihan = 9
 		}
 	}
 
-	for peran == 2 && pilihan != 9 {
+	
+	for peran == 2 && pilihan != 5 {
 		fmt.Println("\nMenu Aplikasi Turnamen")
 		fmt.Println("1. Tampilkan Semua Tim")
 		fmt.Println("2. Cari Tim")
@@ -141,7 +140,7 @@ func main() {
 		fmt.Println("5. Keluar")
 		fmt.Print("Pilih Menu : ")
 		fmt.Scan(&pilihan)
-
+		
 		switch pilihan {
 		case 1:
 			tampilkanSemuaTim(tim, n)
@@ -153,7 +152,8 @@ func main() {
 			tampilkanJadwalPertandingan(match, m)
 			tampilkanHasilPertandingan(match, m)
 		}
-	}
+	}	
+		
 
 	for peran == 1 && pilihan != 9 {
 		fmt.Println("\nMenu Aplikasi Turnamen")
@@ -186,7 +186,7 @@ func main() {
 			tampilkanJadwalPertandingan(match, m)
 			tampilkanHasilPertandingan(match, m)
 		case 8:
-			tambahPertandingan(&match, &m)
+			tambahPertandingan(&match, &m, &tim)
 		}
 	}
 }
@@ -199,15 +199,9 @@ func tambahtim(tim *dataTim, n *int) {
 	for i := 0; i < tambah; i++ {
 		fmt.Println("Masukkan nama tim : ")
 		fmt.Scan(&(*tim)[*n].nama)
-		fmt.Println("Total Menang : ")
-		fmt.Scan(&(*tim)[*n].menang)
-		fmt.Println("Total Kalah : ")
-		fmt.Scan(&(*tim)[*n].kalah)
 		for j := 0; j < 5; j++ {
 			fmt.Println("Masukkan nama pemain : ")
 			fmt.Scan(&(*tim)[*n].player[j].nama)
-			fmt.Println("Masukkan Kill, Death, Assist : ")
-			fmt.Scan(&(*tim)[*n].player[j].kill, &(*tim)[*n].player[j].death, &(*tim)[*n].player[j].assist)
 		}
 		*n++
 	}
@@ -253,8 +247,6 @@ func ubahtim(tim *dataTim, jumlahTim int) {
 				if idx >= 0 && idx < 5 {
 					fmt.Print("Nama pemain baru: ")
 					fmt.Scan(&(*tim)[i].player[idx].nama)
-					fmt.Print("Kill, Death, Assist baru: ")
-					fmt.Scan(&(*tim)[i].player[idx].kill, &(*tim)[i].player[idx].death, &(*tim)[i].player[idx].assist)
 				} else {
 					fmt.Println("Nomor pemain tidak valid.")
 				}
@@ -297,13 +289,26 @@ func hapusTim(tim *dataTim, jumlah *int) {
 }
 
 func tampilkanSemuaTim(tim dataTim, jumlah int) {
+	var pilih int
 	fmt.Println("\nDaftar Semua Tim:")
 	for i := 0; i < jumlah; i++ {
-		fmt.Printf("Tim %d: %s | Menang: %d | Kalah: %d\n", i+1, tim[i].nama, tim[i].menang, tim[i].kalah)
-		for j := 0; j < 5; j++ {
-			fmt.Printf("  Pemain %d: %s | K/D/A Pertandingan terbaru: %d/%d/%d\n", j+1, tim[i].player[j].nama, tim[i].player[j].kill, tim[i].player[j].death, tim[i].player[j].assist)
-		}
+		fmt.Printf("Tim %d: %s |", i+1, tim[i].nama)
+		fmt.Println()
 	}
+	for pilih != 3 {
+	fmt.Println()
+	fmt.Println("1. Cari Tim")
+	fmt.Println("2. Urutkan Tim")
+	fmt.Println("3. Keluar")
+	fmt.Print("Pilih Menu : ")
+	fmt.Scan(&pilih)
+		switch pilih {
+			case 1:
+				cariTim(tim, jumlah)
+			case 2:
+				urutkanTim(&tim, jumlah)
+		}		
+	}		
 }
 
 func cariTim(tim dataTim, jumlah int) {
@@ -317,7 +322,7 @@ func cariTim(tim dataTim, jumlah int) {
 			ditemukan = true
 			fmt.Printf("Tim ditemukan: %s | Menang: %d | Kalah: %d\n", tim[i].nama, tim[i].menang, tim[i].kalah)
 			for j := 0; j < 5; j++ {
-				fmt.Printf("  Pemain %d: %s | K/D/A: %d/%d/%d\n", j+1, tim[i].player[j].nama, tim[i].player[j].kill, tim[i].player[j].death, tim[i].player[j].assist)
+				fmt.Printf("Pemain %d: %s |", j+1, tim[i].player[j].nama)
 			}
 		}
 	}
@@ -360,7 +365,7 @@ func tampilkanHasilPertandingan(match dataPertandingan, jumlah int) {
 		fmt.Printf("%d. %s %d - %d %s | MVP: %s\n", i+1, match[i].tim1, match[i].skor1, match[i].skor2, match[i].tim2, match[i].mvp)
 	}
 }
-func tambahPertandingan(match *dataPertandingan, m *int) {
+func tambahPertandingan(match *dataPertandingan, m *int, tim *dataTim) {
 	var jumlah int
 	fmt.Print("Masukkan jumlah pertandingan yang ingin ditambahkan: ")
 	fmt.Scan(&jumlah)
@@ -378,7 +383,34 @@ func tambahPertandingan(match *dataPertandingan, m *int) {
 		fmt.Scan(&(*match)[*m].tanggal)
 		fmt.Print("MVP: ")
 		fmt.Scan(&(*match)[*m].mvp)
-		*m++
+		
+		tim1 := (*match)[*m].tim1
+		tim2 := (*match)[*m].tim2
+		skor1 := (*match)[*m].skor1
+		skor2 := (*match)[*m].skor2
+
+			if skor1 > skor2 {
+				for i := 0; i < 10; i++ {
+					if tim[i].nama == tim1 {
+						tim[i].menang = tim[i].menang + 1
+					}
+					if tim[i].nama == tim2 {
+						tim[i].kalah = tim[i].kalah + 1
+					}
+				}
+			} else if skor2 > skor1 {
+				for i := 0; i < 10; i++ {
+					if tim[i].nama == tim2 {
+						tim[i].menang = tim[i].menang + 1
+					}
+					if tim[i].nama == tim1 {
+						tim[i].kalah = tim[i].kalah + 1
+					}
+				}
+			}
+			*m++
+			
+
 	}
 	fmt.Println("Pertandingan berhasil ditambahkan.")
 }
